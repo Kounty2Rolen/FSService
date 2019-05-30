@@ -6,8 +6,10 @@ namespace q2.Models
 {
     public class Cats : Animal
     {
+        public string kingdom = "CATS";
+        public Cats() : base() { }
         private int paws = 4;
-        public Cats(int hP, int age) : base(hP, age)
+        public Cats(int hP, int age, string Class,string name) : base(name,hP, age,Class)
         {
 
         }

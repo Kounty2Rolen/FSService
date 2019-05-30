@@ -6,7 +6,11 @@ namespace q2.Models
 {
     class mycat : Cats
     {
-        public mycat(int hp, int age, string name) : base(hp, age)
+        public mycat():base()
+        {
+
+        }
+        public mycat(int hp, int age, string name,string Class) : base(hp, age,Class,name)
         {
             Name = name;
         }

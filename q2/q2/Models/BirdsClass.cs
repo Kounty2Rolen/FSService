@@ -6,7 +6,9 @@ namespace q2.Models
 {
     class Birds : Animal
     {
-        public Birds(int hp, int age) : base(hp, age)
+        public string kingdom = "ANIMALS";
+        public Birds() : base() { }
+        public Birds(int hp, int age,string Class,string name) : base(name,hp, age,Class)
         {
 
         }

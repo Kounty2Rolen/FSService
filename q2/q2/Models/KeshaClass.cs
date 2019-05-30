@@ -4,9 +4,11 @@ using System.Text;
 
 namespace q2.Models
 {
+    [Serializable]
     class Kesha : Birds
     {
-        public Kesha(int hp, int age, string name) : base(hp, age)
+        public Kesha() : base(){ }
+        public Kesha(int hp, int age, string name,string Class) : base(hp, age,Class, name)
         {
             Name = name;
         }
