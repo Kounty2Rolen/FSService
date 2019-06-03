@@ -4,11 +4,15 @@ namespace q2
 {
     public class Animal
     {
-        private string Class;
-        public Animal() { }
         private string name;
         private int HP;
         private int Age;
+        public Animal() {
+            Name = null;
+            HealPoint = -1;
+            Age1 = -1;
+        }
+
         public void hpdown(int i)
         {
             HP -= i;
@@ -18,21 +22,19 @@ namespace q2
             }
         }
 
-        public Animal(string name,int hP, int age, string Class)
+        public Animal(string name,int hP, int age)
         {
             HP = hP;
             Age = age;
-            Class1 = Class;
             Name = name;
         }
         public virtual string info()
         {
-            return $"HP:{HealPoint}\nAge:{Age1}";
+            return $"\nHP:{HealPoint}\nAge:{Age1}";
 
         }
         public int HealPoint { get => HP; set => HP = value; }
         public int Age1 { get => Age; set => Age = value; }
-        public string Class1 { get => Class; set => Class = value; }
         public string Name { get => name; set => name = value; }
     }
 }

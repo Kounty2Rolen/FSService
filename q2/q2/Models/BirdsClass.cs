@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace q2.Models
+﻿namespace q2.Models
 {
     class Birds : Animal
     {
-        public string kingdom = "ANIMALS";
         public Birds() : base() { }
-        public Birds(int hp, int age,string Class,string name) : base(name,hp, age,Class)
+        public Birds(int hp, int age, string name) : base(name, hp, age)
         {
 
         }

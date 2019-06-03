@@ -9,7 +9,7 @@ namespace q2.Models
         public string kingdom = "CATS";
         public Cats() : base() { }
         private int paws = 4;
-        public Cats(int hP, int age, string Class,string name) : base(name,hP, age,Class)
+        public Cats(int hP, int age,string name) : base(name,hP, age)
         {
 
         }
@@ -20,7 +20,7 @@ namespace q2.Models
         }
         public override string info()
         {
-            return base.info() + $"Paws:{Paws}";
+            return base.info() + $"\nPaws:{Paws}";
         }
         public int Paws { get => paws; set => paws = value; }
 

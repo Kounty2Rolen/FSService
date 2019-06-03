@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Collections.Generic;
+using q2.Models;
 
 
 namespace q2.DB_Work
@@ -19,10 +21,9 @@ namespace q2.DB_Work
 
             }
         }
-        #region Сериализация 
         public void openconn()
         {
-            sql = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Root\Desktop\ALL\FSService\q2\q2\DB_Work\Database.mdf;Integrated Security=True");
+            sql = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\ALL\FSService\q2\q2\DB_Work\Database.mdf;Integrated Security=True");
             sql.Open();
         }
         public void closeconn()
@@ -30,53 +31,45 @@ namespace q2.DB_Work
             sql.Close();
             sql.Dispose();
         }
-        public void serialized(String name, int hp, int age, string Class)
-        {
-            var id = 0;
-            SqlCommand sqlc = new SqlCommand("SELECT MAX(id) FROM [Table]", sql);
+        public List<string> GetValue(List<Animal> animal) {
+            SqlCommand sqlc = new SqlCommand(@"SELECT ID,Name,HP,age,squad FROM [Table]", sql);
+            List<string> vs = new List<string>();
             using (var reader = sqlc.ExecuteReader())
             {
-
-                if (reader.HasRows)
+                while (reader.Read())
                 {
-                    if (reader.Read())
-                        id = Convert.ToInt32(reader.GetValue(0));
-                    reader.Close();
-                    sqlc.CommandText = @"INSERT INTO [Table] (ID,NAME,HP,AGE,squad) values ('" + (id + 1) + "','" + name + "','" + Convert.ToString(hp) + "','" + Convert.ToString(age) + "','" + Class + "')";
-                    sqlc.ExecuteNonQuery();
+                    if (reader.HasRows)
+                        //vs.Add(reader.GetValue(1) + ";" + reader.GetValue(2) + ";" + reader.GetValue(3) + ";" + reader.GetValue(4) + ";");
+                        switch (reader.GetValue(4))
+                        {
+                            case "Bird":
+                                {
+                                    animal.Add(new Kesha(reader));
+                                    break;
+                                }
+                            case "Cat":
+                                {
+                                    animal.Add(new mycat(reader));
+                                    break;
+                                }
+
+                        }
+
+
+
+
+
+
+
 
                 }
-                else
-                {
-                    reader.Close();
-                    sqlc.CommandText = @"INSERT INTO [Table] (ID,NAME,HP,AGE,squad) values ('0','" + name + "','" + Convert.ToString(hp) + "','" + Convert.ToString(age) + "','" + Class + "')";
-                    sqlc.ExecuteNonQuery();
-                }
-
             }
-        }
-        #endregion
-        public string[] deserialized(int id)
-        {
-            SqlCommand sqlc = new SqlCommand(@"SELECT ID,Name,HP,age,squad FROM [Table] WHERE ID="+id, sql);
-            using (var reader = sqlc.ExecuteReader())
-            {
-                if (reader.HasRows)
-                {
-                    reader.Read();
-                    string[] row = new string[5] {reader.GetValue(0).ToString(), reader.GetValue(1).ToString(), reader.GetValue(2).ToString(), reader.GetValue(3).ToString(), reader.GetValue(4).ToString()};
-                    return row;
-                }
-                Console.ReadLine();
-            }
-            string[] zero = new string[0];
-            return zero;
-        }
 
+            sqlc.Dispose();
+                return vs;
+        } 
         public void display()
         {
-            openconn();
-
             SqlCommand sqlc = new SqlCommand(@"SELECT ID,Name,HP,age,squad FROM [Table]", sql);
             using (var reader = sqlc.ExecuteReader())
             {

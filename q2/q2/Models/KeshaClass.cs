@@ -1,16 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Data.SqlClient;
 
 namespace q2.Models
 {
-    [Serializable]
     class Kesha : Birds
     {
-        public Kesha() : base(){ }
-        public Kesha(int hp, int age, string name,string Class) : base(hp, age,Class, name)
+        private string Class;
+        public void Serialize(SqlDataReader reader)
+        {
+            Name = reader.GetValue(1).ToString();
+            HealPoint = Convert.ToInt32(reader.GetValue(2));
+            Age1 = Convert.ToInt32(reader.GetValue(3));
+        }
+        public Kesha(SqlDataReader reader) : base()
+        {
+            Serialize(reader);
+        }
+        public Kesha(int hp, int age, string name, string Class = "Kesha") : base(hp, age, name)
         {
             Name = name;
+            this.Class = Class;
         }
         private string name;
         public string Name { get => name; set => name = value; }
