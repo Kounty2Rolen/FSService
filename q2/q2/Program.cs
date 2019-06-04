@@ -1,4 +1,5 @@
 ﻿using q2.DB_Work;
+using q2.Models;
 using System;
 using System.Collections.Generic;
 
@@ -19,22 +20,15 @@ namespace q2
                 {
                     Console.WriteLine(a.info());
                 }
+                db.closeconn();
+                Console.ReadKey();
+                
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message + "\n\n" + ex.StackTrace);
             }
-            //var animals = new List<Animal>();
-            //animals.Add(new Kesha(220, 15, "Kesha Like a Boss", "Bird"));
-            //animals.Add(new mycat(5, 1, "Kid Anton", "Cat"));
-            //animals.Add(new mycat(5, 2, "Barsik", "Cat"));
-            //animals.Add(new mycat(12, 2, "Happy", "Cat"));
-            //foreach (Animal my_skills_are_from_2_labs in animals)
-            //{
-            //    Console.WriteLine(my_skills_are_from_2_labs.info());
-            //}
-            //Console.ReadKey();
-            //Console.Clear();
+           
         }
     }
 }

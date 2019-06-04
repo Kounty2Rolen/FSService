@@ -1,18 +1,45 @@
 ﻿using System;
+using System.Data.SqlClient;
 
-namespace q2
+namespace q2.Models
 {
+    /// <summary>
+    /// Класс-родитель "Животные"
+    /// </summary>
     public class Animal
     {
         private string name;
         private int HP;
         private int Age;
-        public Animal() {
+        /// <summary>
+        /// Метод для сериализации обьектов из sqldatareader
+        /// </summary>
+        /// <param name="reader">sqldatareader</param>
+        public void Serialize(SqlDataReader reader)
+        {
+            if (reader["Name"].ToString() != null)
+                Name = reader["Name"].ToString();
+            if (Convert.ToInt32(reader["HP"]) >= 0)
+                HealPoint = Convert.ToInt32(reader["HP"]);
+            if (Convert.ToInt32(reader["age"]) >= 0)
+                Age1 = Convert.ToInt32(reader["age"]);
+            if (reader["squad"].ToString() == "Bird")
+                if (reader["injail"].ToString() != "false")
+                   Injail = Convert.ToBoolean(reader["injail"].ToString());
+        }
+        /// <summary>
+        /// Конструктор по умолчанию 
+        /// </summary>
+        public Animal()
+        {
             Name = null;
             HealPoint = -1;
             Age1 = -1;
         }
-
+        /// <summary>
+        /// Метод отнимания HP
+        /// </summary>
+        /// <param name="i">Кол-во "дамаги"</param>
         public void hpdown(int i)
         {
             HP -= i;
@@ -21,18 +48,30 @@ namespace q2
                 Console.WriteLine("Him Die NOOOOOO! \n God pls NO!!!!");
             }
         }
-
-        public Animal(string name,int hP, int age)
+        /// <summary>
+        /// Конструктор животных
+        /// </summary>
+        /// <param name="name">Имя</param>
+        /// <param name="hP">Жизни</param>
+        /// <param name="age">Возраст</param>
+        public Animal(string name, int hP, int age)
         {
             HP = hP;
             Age = age;
             Name = name;
         }
+        /// <summary>
+        /// Вывод информации об обьекте
+        /// </summary>
+        /// <returns>Возвращает информацию об обьекте </returns>
         public virtual string info()
         {
             return $"\nHP:{HealPoint}\nAge:{Age1}";
 
         }
+        private bool injail = false;
+
+        public bool Injail { get => injail; set => injail = value; }
         public int HealPoint { get => HP; set => HP = value; }
         public int Age1 { get => Age; set => Age = value; }
         public string Name { get => name; set => name = value; }

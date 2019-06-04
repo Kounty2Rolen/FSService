@@ -31,43 +31,42 @@ namespace q2.DB_Work
             sql.Close();
             sql.Dispose();
         }
-        public List<string> GetValue(List<Animal> animal) {
-            SqlCommand sqlc = new SqlCommand(@"SELECT ID,Name,HP,age,squad FROM [Table]", sql);
-            List<string> vs = new List<string>();
+        /// <summary>
+        /// Метод для чтения данных из бд и создания обьектов по ключевому полю Squad
+        /// </summary>
+        /// <param name="animal">Список в который будут добавлятся обьекты</param>
+        public void GetValue(List<Animal> animal)
+        {
+            SqlCommand sqlc = new SqlCommand(@"SELECT Name,HP,AGE,squad,injail FROM [Table]", sql);
             using (var reader = sqlc.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    if (reader.HasRows)
-                        //vs.Add(reader.GetValue(1) + ";" + reader.GetValue(2) + ";" + reader.GetValue(3) + ";" + reader.GetValue(4) + ";");
-                        switch (reader.GetValue(4))
-                        {
-                            case "Bird":
-                                {
-                                    animal.Add(new Kesha(reader));
-                                    break;
-                                }
-                            case "Cat":
-                                {
-                                    animal.Add(new mycat(reader));
-                                    break;
-                                }
+                    switch (reader["squad"])
+                    {
+                        case "Bird":
+                            {
+                                animal.Add(new Kesha());
+                                animal[animal.Count-1].Serialize(reader); 
+                                break;
+                            }
+                        case "Cat":
+                            {
+                                animal.Add(new mycat());
+                                animal[animal.Count-1].Serialize(reader);
+                                break;
+                            }
 
-                        }
-
-
-
-
-
-
-
-
+                    }
                 }
             }
 
+            //Высвобождение всех ресурсов занятых Sqlc
             sqlc.Dispose();
-                return vs;
-        } 
+        }
+        /// <summary>
+        /// Метод вывода содержимого бд на экран
+        /// </summary>
         public void display()
         {
             SqlCommand sqlc = new SqlCommand(@"SELECT ID,Name,HP,age,squad FROM [Table]", sql);
@@ -78,11 +77,11 @@ namespace q2.DB_Work
                     Console.WriteLine("{0}\t{1}\t{2}\t{3}\n\n", reader.GetName(0), reader.GetName(1), reader.GetName(2), reader.GetName(3), reader.GetName(4)); ;
                     while (reader.Read())
                     {
-                        var id = reader.GetValue(0);
-                        var Name = reader.GetValue(1);
-                        var HP = reader.GetValue(2);
-                        var Age = reader.GetValue(3);
-                        var squad = reader.GetValue(4);
+                        var id = reader["ID"];
+                        var Name = reader["name"];
+                        var HP = reader["HP"];
+                        var Age = reader["age"];
+                        var squad = reader["squad"];
                         Console.WriteLine("{0}\t{1}\t{2}\t{3}", id, Name, HP, Age);
                     }
                 }

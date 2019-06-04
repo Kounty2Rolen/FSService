@@ -2,7 +2,11 @@
 {
     class Birds : Animal
     {
-        public Birds() : base() { }
+        public Birds() : base() {
+            Name = null;
+            HealPoint = -1;
+            Age1 = -1;
+        }
         public Birds(int hp, int age, string name) : base(name, hp, age)
         {
 
