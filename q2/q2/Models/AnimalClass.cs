@@ -15,17 +15,14 @@ namespace q2.Models
         /// Метод для сериализации обьектов из sqldatareader
         /// </summary>
         /// <param name="reader">sqldatareader</param>
-        public void Serialize(SqlDataReader reader)
+        public virtual void Serialize(SqlDataReader reader)
         {
-            if (reader["Name"].ToString() != null)
+            if (reader["Name"] != null)
                 Name = reader["Name"].ToString();
             if (Convert.ToInt32(reader["HP"]) >= 0)
                 HealPoint = Convert.ToInt32(reader["HP"]);
             if (Convert.ToInt32(reader["age"]) >= 0)
                 Age1 = Convert.ToInt32(reader["age"]);
-            if (reader["squad"].ToString() == "Bird")
-                if (reader["injail"].ToString() != "false")
-                   Injail = Convert.ToBoolean(reader["injail"].ToString());
         }
         /// <summary>
         /// Конструктор по умолчанию 
@@ -69,9 +66,7 @@ namespace q2.Models
             return $"\nHP:{HealPoint}\nAge:{Age1}";
 
         }
-        private bool injail = false;
 
-        public bool Injail { get => injail; set => injail = value; }
         public int HealPoint { get => HP; set => HP = value; }
         public int Age1 { get => Age; set => Age = value; }
         public string Name { get => name; set => name = value; }

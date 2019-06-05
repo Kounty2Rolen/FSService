@@ -7,10 +7,6 @@ namespace q2.Models
         public string kingdom = "CATS";
         public Cats() : base()
         {
-            Name = null;
-            HealPoint = -1;
-            Age1 = -1;
-
         }
         public Cats(int hP, int age, string name) : base(name, hP, age)
         {

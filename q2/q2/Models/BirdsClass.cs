@@ -1,15 +1,22 @@
-﻿namespace q2.Models
+﻿using System.Data.SqlClient;
+using System;
+
+namespace q2.Models
 {
     class Birds : Animal
     {
-        public Birds() : base() {
-            Name = null;
-            HealPoint = -1;
-            Age1 = -1;
+        public Birds() : base()
+        {
         }
         public Birds(int hp, int age, string name) : base(name, hp, age)
         {
 
+        }
+        public override void Serialize(SqlDataReader reader)
+        {
+            base.Serialize(reader);
+            if (reader["egg"] != null)
+                Egg = Convert.ToBoolean(reader["egg"]);
         }
         private bool egg = false;
         public override string info()

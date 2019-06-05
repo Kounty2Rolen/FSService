@@ -35,59 +35,41 @@ namespace q2.DB_Work
         /// Метод для чтения данных из бд и создания обьектов по ключевому полю Squad
         /// </summary>
         /// <param name="animal">Список в который будут добавлятся обьекты</param>
-        public void GetValue(List<Animal> animal)
+        public List<Animal> GetValue()
         {
-            SqlCommand sqlc = new SqlCommand(@"SELECT Name,HP,AGE,squad,injail FROM [Table]", sql);
-            using (var reader = sqlc.ExecuteReader())
+            List<Animal> animal = new List<Animal>();
+            using (SqlCommand sqlc = new SqlCommand(@"SELECT Name,HP,AGE,squad,injail,egg,paws FROM [Table]", sql))
             {
-                while (reader.Read())
+                using (var reader = sqlc.ExecuteReader())
                 {
-                    switch (reader["squad"])
+                    while (reader.Read())
                     {
-                        case "Bird":
-                            {
-                                animal.Add(new Kesha());
-                                animal[animal.Count-1].Serialize(reader); 
-                                break;
-                            }
-                        case "Cat":
-                            {
-                                animal.Add(new mycat());
-                                animal[animal.Count-1].Serialize(reader);
-                                break;
-                            }
+                        switch (reader["squad"])
+                        {
+                            case "Bird":
+                                {
+                                    animal.Add(new Kesha(reader));
+                                    break;
+                                }
+                            case "Cat":
+                                {
+                                    animal.Add(new mycat(reader));
+                                    break;
+                                }
 
+                        }
                     }
+                    //foreach (Animal a in animal)
+                    //    a.Serialize(reader);
                 }
             }
 
-            //Высвобождение всех ресурсов занятых Sqlc
-            sqlc.Dispose();
+            return animal;
+
         }
         /// <summary>
         /// Метод вывода содержимого бд на экран
         /// </summary>
-        public void display()
-        {
-            SqlCommand sqlc = new SqlCommand(@"SELECT ID,Name,HP,age,squad FROM [Table]", sql);
-            using (var reader = sqlc.ExecuteReader())
-            {
-                if (reader.HasRows)
-                {
-                    Console.WriteLine("{0}\t{1}\t{2}\t{3}\n\n", reader.GetName(0), reader.GetName(1), reader.GetName(2), reader.GetName(3), reader.GetName(4)); ;
-                    while (reader.Read())
-                    {
-                        var id = reader["ID"];
-                        var Name = reader["name"];
-                        var HP = reader["HP"];
-                        var Age = reader["age"];
-                        var squad = reader["squad"];
-                        Console.WriteLine("{0}\t{1}\t{2}\t{3}", id, Name, HP, Age);
-                    }
-                }
-            }
-
-            sqlc.Dispose();
-        }
+        
     }
 }

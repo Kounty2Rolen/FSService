@@ -1,7 +1,7 @@
 ﻿using q2.DB_Work;
 using q2.Models;
 using System;
-using System.Collections.Generic;
+using System.Data.SqlClient;
 
 
 namespace q2
@@ -13,10 +13,9 @@ namespace q2
         {
             try
             {
-                List<Animal> my_skills_are_from_2_labs = new List<Animal>();
                 DBinit db = new DBinit();
-                db.GetValue(my_skills_are_from_2_labs);
-                foreach (Animal a in my_skills_are_from_2_labs)
+                db.GetValue();
+                foreach (Animal a in db.GetValue())
                 {
                     Console.WriteLine(a.info());
                 }
@@ -24,11 +23,16 @@ namespace q2
                 Console.ReadKey();
                 
             }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + "\n\n" + ex.StackTrace);
+                Console.WriteLine(ex.ToString());
             }
-           
+
+
         }
     }
 }
