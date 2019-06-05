@@ -17,11 +17,8 @@ namespace q2.Models
         /// <param name="reader">sqldatareader</param>
         public virtual void Serialize(SqlDataReader reader)
         {
-            if (reader["Name"] != null)
                 Name = reader["Name"].ToString();
-            if (Convert.ToInt32(reader["HP"]) >= 0)
                 HealPoint = Convert.ToInt32(reader["HP"]);
-            if (Convert.ToInt32(reader["age"]) >= 0)
                 Age1 = Convert.ToInt32(reader["age"]);
         }
         /// <summary>

@@ -35,10 +35,10 @@ namespace q2.DB_Work
         /// Метод для чтения данных из бд и создания обьектов по ключевому полю Squad
         /// </summary>
         /// <param name="animal">Список в который будут добавлятся обьекты</param>
-        public List<Animal> GetValue()
+        public List<Animal> GetAllRecords()
         {
-            List<Animal> animal = new List<Animal>();
-            using (SqlCommand sqlc = new SqlCommand(@"SELECT Name,HP,AGE,squad,injail,egg,paws FROM [Table]", sql))
+            var animal = new List<Animal>();
+            using (var sqlc = new SqlCommand(@"SELECT Name,HP,AGE,squad,injail,egg,paws FROM AnimalsTable", sql))
             {
                 using (var reader = sqlc.ExecuteReader())
                 {
@@ -48,28 +48,25 @@ namespace q2.DB_Work
                         {
                             case "Bird":
                                 {
-                                    animal.Add(new Kesha(reader));
+                                    animal.Add(new Kesha());
                                     break;
                                 }
                             case "Cat":
                                 {
-                                    animal.Add(new mycat(reader));
+                                    animal.Add(new mycat());
                                     break;
                                 }
-
+                                
                         }
+                        animal.FindLast(x => { x.Serialize(reader);return true; });
                     }
-                    //foreach (Animal a in animal)
-                    //    a.Serialize(reader);
+
                 }
             }
 
             return animal;
 
         }
-        /// <summary>
-        /// Метод вывода содержимого бд на экран
-        /// </summary>
-        
+
     }
 }

@@ -7,17 +7,15 @@ namespace q2.Models
     class mycat : Cats
     {
         private string Class;
-        public mycat(SqlDataReader reader) : base()
+        public mycat() : base()
         {
             Name = null;
             HealPoint = -1;
             Age1 = -1;
-            Serialize(reader);
         }
         public override void Serialize(SqlDataReader reader)
         {
             base.Serialize(reader);
-            if (reader["paws"] != null)
                 paws = Convert.ToInt32(reader["paws"]);
         }
         private int paws;

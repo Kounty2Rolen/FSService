@@ -13,12 +13,8 @@ namespace q2
         {
             try
             {
-                DBinit db = new DBinit();
-                db.GetValue();
-                foreach (Animal a in db.GetValue())
-                {
-                    Console.WriteLine(a.info());
-                }
+                var db = new DBinit();
+                db.GetAllRecords().ForEach(x => { Console.WriteLine(x.info()); });
                 db.closeconn();
                 Console.ReadKey();
                 
@@ -27,10 +23,10 @@ namespace q2
             {
                 Console.WriteLine(ex.ToString());
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.ToString());
+            //}
 
 
         }

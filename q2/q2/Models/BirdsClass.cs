@@ -15,7 +15,6 @@ namespace q2.Models
         public override void Serialize(SqlDataReader reader)
         {
             base.Serialize(reader);
-            if (reader["egg"] != null)
                 Egg = Convert.ToBoolean(reader["egg"]);
         }
         private bool egg = false;
