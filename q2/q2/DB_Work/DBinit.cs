@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using q2.Models;
+using System.Reflection;
 
 
 namespace q2.DB_Work
@@ -42,31 +43,36 @@ namespace q2.DB_Work
             {
                 using (var reader = sqlc.ExecuteReader())
                 {
+                    Animal a=null;
                     while (reader.Read())
                     {
                         switch (reader["squad"])
                         {
                             case "Bird":
                                 {
-                                    animal.Add(new Kesha());
+                                    a = new Kesha();
                                     break;
                                 }
                             case "Cat":
                                 {
-                                    animal.Add(new mycat());
+                                    a = new mycat();
                                     break;
                                 }
-                                
+
                         }
-                        animal.FindLast(x => { x.Serialize(reader);return true; });
+                        a.Serialize(reader);
+                        animal.Add(a);
                     }
 
+
                 }
+                return animal;
             }
 
-            return animal;
+
 
         }
-
     }
 }
+
+
