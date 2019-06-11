@@ -23,10 +23,10 @@ namespace q2
             {
                 Console.WriteLine(ex.ToString());
             }
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.ToString());
-            //}
+            catch (Exception ex)
+            {
+                Console.WriteLine("Some system Error please throw your PC in the trash" + ex.ToString());
+            }
 
 
         }
