@@ -1,14 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Data.SqlClient;
+using System;
 
 namespace q2.Models
 {
     class Birds : Animal
     {
-        public Birds(int hp, int age) : base(hp, age)
+        public Birds() : base()
+        {
+        }
+        public Birds(int hp, int age, string name) : base(name, hp, age)
         {
 
+        }
+        public override void Serialize(SqlDataReader reader)
+        {
+            base.Serialize(reader);
+                Egg = Convert.ToBoolean(reader["egg"]);
         }
         private bool egg = false;
         public override string info()

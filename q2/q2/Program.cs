@@ -1,23 +1,33 @@
-﻿
+﻿using q2.DB_Work;
+using q2.Models;
 using System;
-using System.Collections.Generic;
+using System.Data.SqlClient;
+
 
 namespace q2
 {
     class Program
     {
+
         static void Main()
         {
-            var animals = new List<Animal>();
-            animals.Add(new Kesha(220, 15, "Kesha Like a Boss"));
-            animals.Add(new mycat(5, 1, "Kid Anton"));
-            animals.Add(new mycat(5, 2, "Barsik"));
-            animals.Add(new mycat(12, 2, "Happy"));
-            foreach (Animal animal in animals)
+            try
             {
-                Console.WriteLine(animal.info());
+                var db = new DBinit();
+                db.GetAllRecords().ForEach(x => { Console.WriteLine(x.info()); });
+                db.closeconn();
+                Console.ReadKey();
+                
             }
-            Console.ReadKey();
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Some system Error please throw your PC in the trash" + ex.ToString());
+            }
+
 
         }
     }
